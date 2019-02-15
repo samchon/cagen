@@ -1,9 +1,9 @@
 {
   "name": "number-of-cases",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Number of Cases Generator",
   "main": "lib/index.js",
-  "typings": "./index.d.ts",
+  "typings": "lib/index.d.ts",
   "scripts": {
     "build": "tsc",
     "test": "node lib/test/main"

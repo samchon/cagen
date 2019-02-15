@@ -1,5 +1,9 @@
 # Number-of-Cases
-## Outline
+[![Build Status](https://travis-ci.org/samchon/number-of-cases.svg?branch=master)](https://travis-ci.org/samchon/number-of-cases)
+[![npm version](https://badge.fury.io/js/number-of-cases.svg)](https://www.npmjs.com/package/number-of-cases)
+[![Downloads](https://img.shields.io/npm/dm/number-of-cases.svg)](https://www.npmjs.com/package/number-of-cases)
+[![DeepScan grade](https://deepscan.io/api/teams/1932/projects/3345/branches/29408/badge/grade.svg)](https://deepscan.io/dashboard#view=project&tid=1932&pid=3345&bid=29408)
+
 Number of Case Generator for TypeScript (JavaScript).
 
 Symbol                    | Class
