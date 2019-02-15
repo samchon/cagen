@@ -1,6 +1,6 @@
-import * as std from "tstl";
+import { Vector } from "tstl/container/Vector";
 
-export type BitMask = std.Vector<boolean>;
+export type BitMask = Vector<boolean>;
 
 export function convert(bitMask: BitMask): Array<number>
 {

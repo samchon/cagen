@@ -1,11 +1,10 @@
-import * as std from "tstl";
-
 import { ICaseGenerator } from "../base/ICaseGenerator";
 
 import { CombinationIterator } from "../combinates/CombinationIterator";
 import { CombinationReverseIterator } from "../combinates/CombinationReverseIterator";
 import { CombinationForOfAdaptor } from "../combinates/CombinationForOfAdaptor";
 
+import { Vector } from "tstl/container/Vector";
 import { BitMask } from "../combinates/BitMask";
 
 export class Combination 
@@ -32,12 +31,12 @@ export class Combination
 		for (let i: number = 0; i < r; ++i)
 			this.size_ *= (n-i) / (i+1);
 
-		this.bit_mask_ = new std.Vector(r, true);
+		this.bit_mask_ = new Vector(r, true);
 		this.bit_mask_.insert(this.bit_mask_.end(), n - r, false);
 
 		// ITERATORS
 		this.begin_ = new Combination.Iterator(this, this.bit_mask_);
-		this.end_ = new Combination.Iterator(this, null);
+		this.end_ = new Combination.Iterator(this, null!);
 	}
 
 	/* ---------------------------------------------------------

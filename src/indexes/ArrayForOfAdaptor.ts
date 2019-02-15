@@ -17,7 +17,7 @@ export class ArrayForOfAdaptor<Source extends ArrayGenerator<Source>>
 		if (this.index_ === this.source_.size())
 			return {
 				done: true,
-				value: undefined
+				value: undefined!
 			};
 		else
 			return {

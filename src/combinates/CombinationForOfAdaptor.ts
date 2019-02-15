@@ -1,5 +1,5 @@
-import * as std from "tstl";
 import { BitMask, convert } from "./BitMask";
+import { prev_permutation } from "tstl/algorithm/mathematics";
 
 export class CombinationForOfAdaptor
 {
@@ -17,12 +17,12 @@ export class CombinationForOfAdaptor
 		if (this.done_ === true)
 			return {
 				done: true,
-				value: undefined
+				value: undefined!
 			};
 		else
 		{
 			let value: Array<number> = convert(this.bit_mask_);
-			this.done_ = !std.prev_permutation(this.bit_mask_.begin(), this.bit_mask_.end());
+			this.done_ = !prev_permutation(this.bit_mask_.begin(), this.bit_mask_.end());
 
 			return {
 				done: false,
