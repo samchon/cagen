@@ -1,4 +1,6 @@
 # Number-of-Cases
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fsamchon%2Fnumber-of-cases.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fsamchon%2Fnumber-of-cases?ref=badge_shield)
+
 ## Outline
 Number of Case Generator for TypeScript (JavaScript).
 
@@ -105,3 +107,7 @@ function main(): void
 }
 main();
 ```
+
+
+## License
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fsamchon%2Fnumber-of-cases.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fsamchon%2Fnumber-of-cases?ref=badge_large)
