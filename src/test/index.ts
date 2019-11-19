@@ -1,4 +1,4 @@
-import * as std from "tstl";
+import std = require("tstl");
 
 import { ICaseGenerator } from "../base/ICaseGenerator";
 import { ICaseReverseIterator } from "../base/ICaseReverseIterator";

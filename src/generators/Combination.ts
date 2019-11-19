@@ -87,6 +87,6 @@ export namespace Combination
 	export type Iterator = CombinationIterator;
 	export type ReverseIterator = CombinationReverseIterator;
 
-	export var Iterator = CombinationIterator;
-	export var ReverseIterator = CombinationReverseIterator;
+	export const Iterator = CombinationIterator;
+	export const ReverseIterator = CombinationReverseIterator;
 }

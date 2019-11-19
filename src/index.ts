@@ -1,6 +1,4 @@
-export * from "./generators/Permutation";
-export * from "./generators/Factorial";
-export * from "./generators/RepeatedPermutation";
+export * from "./module";
 
-export * from "./generators/CartesianProduct";
-export * from "./generators/Combination";
+import m = require("./module");
+export default m;

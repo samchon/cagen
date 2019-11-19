@@ -1,16 +1,17 @@
 {
   "name": "number-of-cases",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Number of Cases Generator",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "scripts": {
-    "build": "tsc",
-    "test": "node lib/test/main"
+    "build": "npm run compile && npm run test",
+    "compile": "tsc",
+    "test": "node lib/test"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/samchon/number-of-cases.git"
+    "url": "https://github.com/samchon/number-of-cases"
   },
   "author": "Jeongho Nam",
   "license": "MIT",
@@ -19,6 +20,9 @@
   },
   "homepage": "https://github.com/samchon/number-of-cases#readme",
   "dependencies": {
-    "tstl": ">=2.1.2"
+    "tstl": ">=2.3.0"
+  },
+  "devDependencies": {
+    "typescript": "^3.7.2"
   }
 }
