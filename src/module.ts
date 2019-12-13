@@ -4,3 +4,4 @@ export * from "./generators/RepeatedPermutation";
 
 export * from "./generators/CartesianProduct";
 export * from "./generators/Combination";
+export * from "./generators/RepeatedCombination";
