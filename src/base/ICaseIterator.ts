@@ -1,13 +1,10 @@
-import { IReversableIterator } from "tstl/iterator";
-
 import { ICaseGenerator } from "./ICaseGenerator";
-import { ICaseReverseIterator } from "./ICaseReverseIterator";
+import { IForwardIterator } from "tstl/iterator/IForwardIterator";
 
 export interface ICaseIterator<
-		SourceT extends ICaseGenerator<SourceT, IteratorT, ReverseT>,
-		IteratorT extends ICaseIterator<SourceT, IteratorT, ReverseT>,
-		ReverseT extends ICaseReverseIterator<SourceT, IteratorT, ReverseT>>
-	extends IReversableIterator<Array<number>, IteratorT, ReverseT>
+		SourceT extends ICaseGenerator<SourceT, IteratorT>,
+		IteratorT extends ICaseIterator<SourceT, IteratorT>>
+	extends IForwardIterator<Array<number>, IteratorT>
 {
 	source(): SourceT;
 }

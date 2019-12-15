@@ -1,7 +1,6 @@
 import std = require("tstl");
 
 import { ICaseGenerator } from "../base/ICaseGenerator";
-import { ICaseReverseIterator } from "../base/ICaseReverseIterator";
 import { ICaseIterator } from "../base/ICaseIterator";
 
 import { CartesianProduct } from "../generators/CartesianProduct";
@@ -24,9 +23,8 @@ function comparator(x: Elements, y: Elements): boolean
 }
 
 function validate<
-		Source extends ICaseGenerator<Source, IteratorT, ReverseT>,
-		IteratorT extends ICaseIterator<Source, IteratorT, ReverseT>,
-		ReverseT extends ICaseReverseIterator<Source, IteratorT, ReverseT>>
+		Source extends ICaseGenerator<Source, IteratorT>,
+		IteratorT extends ICaseIterator<Source, IteratorT>>
 	(name: string, generator: Source): void
 {
 	//----
@@ -38,7 +36,7 @@ function validate<
 
 	for (let it = generator.begin(); !it.equals(generator.end()); it = it.next())
 		data.at(0).insert(it.value);
-	for (let it = generator.rbegin(); !it.equals(generator.rend()); it = it.next())
+	for (let it = (generator as any).rbegin(); !it.equals((generator as any).rend()); it = it.next())
 		data.at(1).insert(it.value);
 	for (let elems of generator)
 		data.at(2).insert(elems);

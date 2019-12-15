@@ -1,5 +1,4 @@
-import { ArrayGenerator } from "../indexes/ArrayGenerator";
-import { IPermutation } from "../indexes/IPermutation";
+import { ArrayGenerator } from "../base/ArrayGenerator";
 
 /**
  * A repeated-permutation case generator.
@@ -10,7 +9,6 @@ import { IPermutation } from "../indexes/IPermutation";
  */
 export class RepeatedPermutation 
 	extends ArrayGenerator<RepeatedPermutation>
-	implements IPermutation<RepeatedPermutation>
 {
 	/**
 	 * @hidden
@@ -103,4 +101,10 @@ export class RepeatedPermutation
 		}
 		return row;
 	}
+}
+
+export namespace RepeatedPermutation
+{
+	export type Iterator = ArrayGenerator.Iterator<RepeatedPermutation>;
+	export type ReverseIterator = ArrayGenerator.ReverseIterator<RepeatedPermutation>;
 }

@@ -8,11 +8,12 @@ Number of Case Generator for TypeScript (JavaScript).
 
 Symbol                    | Class
 --------------------------|----------------------
-<sub>n</sub>P<sub>r</sub> | Permutation
-n!                        | Factorial
-<sub>n</sub>∏<sub>r</sub> | RepeatedPermutation
 A x B x ... x Z           | CartesianProduct
+n!                        | Factorial
+<sub>n</sub>P<sub>r</sub> | Permutation
+<sub>n</sub>∏<sub>r</sub> | RepeatedPermutation
 <sub>n</sub>C<sub>r</sub> | Combination
+<sub>n</sub>H<sub>r</sub> | RepeatedCombination
 
 
 

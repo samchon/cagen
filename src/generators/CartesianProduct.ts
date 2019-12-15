@@ -1,4 +1,4 @@
-import { ArrayGenerator } from "../indexes/ArrayGenerator";
+import { ArrayGenerator } from "../base/ArrayGenerator";
 
 /**
  * A cartesian-product case generator.
