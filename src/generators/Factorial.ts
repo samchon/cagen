@@ -9,13 +9,13 @@ import { Permutation } from "./Permutation";
  */
 export class Factorial extends Permutation
 {
-	/**
-	 * Construct from factorial size N. 
-	 *
-	 * @param n Factoria size N.
-	 */
-	public constructor(n: number)
-	{
-		super(n, n);
-	}
+    /**
+     * Construct from factorial size N. 
+     *
+     * @param n Factoria size N.
+     */
+    public constructor(n: number)
+    {
+        super(n, n);
+    }
 }

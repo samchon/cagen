@@ -16,31 +16,28 @@ export class RepeatedCombination
 
         this.n_ = n;
         this.r_ = r;
-        this.size_ = 1;
-
-        for (let i: number = 0; i < r; ++i)
-            this.size_ *= ((n+r-1) - i) / (i+1);
-
+        this.size_ = RepeatedCombination.size(n, r);
+        
         this.begin_ = new RepeatedCombination.Iterator(this, 0);
         this.end_ = new RepeatedCombination.Iterator(this, this.size_);
     }
 
     /* ---------------------------------------------------------
-		ACCESSORS
-	--------------------------------------------------------- */
-	public size(): number
-	{
-		return this.size_;
+        ACCESSORS
+    --------------------------------------------------------- */
+    public size(): number
+    {
+        return this.size_;
     }
     
-	public n(): number
-	{
-		return this.n_;
+    public n(): number
+    {
+        return this.n_;
     }
     
-	public r(): number
-	{
-		return this.r_;
+    public r(): number
+    {
+        return this.r_;
     }
 
     public equals(obj: RepeatedCombination): boolean
@@ -49,7 +46,7 @@ export class RepeatedCombination
     }
     
     /* ---------------------------------------------------------
-		ITERATORS
+        ITERATORS
     --------------------------------------------------------- */
     public begin(): RepeatedCombination.Iterator
     {
@@ -69,6 +66,15 @@ export class RepeatedCombination
 
 export namespace RepeatedCombination
 {
+    export function size(n: number, r: number): number
+    {
+        let ret: number = 1;
+        for (let i: number = 0; i < r; ++i)
+            ret *= ((n+r-1) - i) / (i+1);
+
+        return Math.round(ret);
+    }
+    
     export class Iterator
     {
         private source_: RepeatedCombination;
