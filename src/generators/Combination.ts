@@ -1,4 +1,5 @@
 import { ICaseGenerator } from "../base/ICaseGenerator";
+import { Validator } from "../base/Validator";
 
 import { Vector } from "tstl/container/Vector";
 import { OutOfRange } from "tstl/exception";
@@ -20,6 +21,8 @@ export class Combination
     --------------------------------------------------------- */
     public constructor(n: number, r: number)
     {
+        Validator.initializer.bind(this)(n, r);
+
         // BASIC MEMBERS
         this.n_ = n;
         this.r_ = r;
@@ -241,6 +244,9 @@ export namespace Combination
         }
     }
 
+    /**
+     * @internal
+     */
     function _Mask(bitMask: Vector<boolean>): number[]
     {
         let ret: number[] = [];

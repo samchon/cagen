@@ -1,3 +1,4 @@
+import { OutOfRange } from "tstl/exception";
 import { equal_to } from "tstl/functional/comparators";
 
 export abstract class ArrayGenerator<Source extends ArrayGenerator<Source>>
@@ -6,7 +7,21 @@ export abstract class ArrayGenerator<Source extends ArrayGenerator<Source>>
         COMPUTATIONS
     --------------------------------------------------------- */
     public abstract size(): number;
-    public abstract at(index: number): Array<number>;
+    
+    public at(index: number): Array<number>
+    {
+        if (index < 0)
+            throw new OutOfRange(`Error on ${this.constructor.name}.at(): parametric index is negative -> (index = ${index})`);
+        else if (index >= this.size())
+            throw new OutOfRange(`Error on ${this.constructor.name}.at(): parametric index is equal or greater than size -> (index = ${index}, size = ${this.size()})`);
+
+        return this._At(index);
+    }
+
+    /**
+     * @hidden
+     */
+    protected abstract _At(index: number): Array<number>;
 
     /* ---------------------------------------------------------
         ITERATORS

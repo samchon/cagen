@@ -1,4 +1,5 @@
 import { ArrayGenerator } from "../base/ArrayGenerator";
+import { Validator } from "../base/Validator";
 
 /**
  * A permutation case generator.
@@ -37,6 +38,7 @@ export class Permutation
     public constructor(n: number, r: number) 
     {
         super();
+        Validator.initializer.bind(this)(n, r);
 
         this.n_ = n;
         this.r_ = r;
@@ -74,9 +76,9 @@ export class Permutation
         COMPUTATION
     ----------------------------------------------------------- */
     /**
-     * @inheritdoc
+     * @hidden
      */
-    public at(index: number): Array<number>
+    protected _At(index: number): Array<number>
     {
         let atoms: Array<number> = [];
         for (let i: number = 0; i < this.n_; i++)

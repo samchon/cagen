@@ -1,6 +1,6 @@
 {
   "name": "number-of-cases",
-  "version": "1.1.0-dev.20191216",
+  "version": "1.1.0-dev.20191223",
   "description": "Number of Cases Generator",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",

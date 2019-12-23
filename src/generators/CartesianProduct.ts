@@ -1,4 +1,5 @@
 import { ArrayGenerator } from "../base/ArrayGenerator";
+import { InvalidArgument } from "tstl/exception";
 
 /**
  * A cartesian-product case generator.
@@ -36,14 +37,17 @@ export class CartesianProduct extends ArrayGenerator<CartesianProduct>
     {
         super();
         this.digits_ = digits;
-
         this.dividers_ = new Array(digits.length);
-        this.size_ = 1;
 
+        this.size_ = 1;
         for (let i: number = digits.length - 1; i >= 0; i--)
         {
+            let value: number = digits[i];
+            if (value <= 0 || Math.floor(value) !== value)
+                throw new InvalidArgument(`Error on ${this.constructor.name}.constructor(): parametric values must be positive integer -> (${digits.join(", ")})`);
+
             this.dividers_[i] = this.size_;
-            this.size_ *= digits[i];
+            this.size_ *= value;
         }
     }
 
@@ -70,9 +74,9 @@ export class CartesianProduct extends ArrayGenerator<CartesianProduct>
         COMPUTATION
     ----------------------------------------------------------- */
     /**
-     * @inheritdoc
+     * @hidden
      */
-    public at(index: number): Array<number>
+    protected _At(index: number): Array<number>
     {
         let row: Array<number> = [];
         for (let i: number = 0; i < this.digits_.length; i++)
@@ -84,5 +88,20 @@ export class CartesianProduct extends ArrayGenerator<CartesianProduct>
         }
 
         return row;
+    }
+}
+
+export namespace CartesianProduct
+{
+    export type Iterator = ArrayGenerator.Iterator<CartesianProduct>;
+    export type ReverseIterator = ArrayGenerator.ReverseIterator<CartesianProduct>;
+
+    export function size(...digits: number[]): number
+    {
+        let ret: number = 1;
+        for (let elem of digits)
+            ret *= elem;
+
+        return ret;
     }
 }

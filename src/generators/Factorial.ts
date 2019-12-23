@@ -19,3 +19,14 @@ export class Factorial extends Permutation
         super(n, n);
     }
 }
+
+export namespace Factorial
+{
+    export function size(n: number): number
+    {
+        let ret: number = 1;
+        while (n-- > 1)
+            ret *= n;
+        return ret;
+    }
+}

@@ -1,4 +1,5 @@
 import { ArrayGenerator } from "../base/ArrayGenerator";
+import { Validator } from "../base/Validator";
 
 /**
  * A repeated-permutation case generator.
@@ -42,6 +43,7 @@ export class RepeatedPermutation
     public constructor(n: number, r: number)
     {
         super();
+        Validator.initializer.bind(this)(n, r);
 
         this.n_ = n;
         this.r_ = r;
@@ -88,9 +90,9 @@ export class RepeatedPermutation
         COMPUTATION
     ----------------------------------------------------------- */
     /**
-     * @inheritdoc
+     * @hidden
      */
-    public at(index: number): Array<number>
+    protected _At(index: number): Array<number>
     {
         let row: Array<number> = [];
         for (let i: number = 0; i < this.r_; i++)

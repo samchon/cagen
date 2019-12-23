@@ -1,4 +1,5 @@
-import { OutOfRange, InvalidArgument } from "tstl/exception";
+import { OutOfRange } from "tstl/exception";
+import { Validator } from "../base/Validator";
 
 export class RepeatedCombination
 {
@@ -11,8 +12,7 @@ export class RepeatedCombination
 
     public constructor(n: number, r: number)
     {
-        if (n <= 0 || r <= 0 || Math.abs(n) !== n || Math.abs(r) !== r)
-            throw new InvalidArgument(`Error on RepeatedCombination.constructor(): both n and r must be positive integer -> (n = ${n}, r = ${r})`);
+        Validator.initializer.bind(this)(n, r);
 
         this.n_ = n;
         this.r_ = r;
