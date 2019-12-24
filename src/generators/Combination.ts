@@ -1,12 +1,14 @@
 import { ICaseGenerator } from "../base/ICaseGenerator";
+import { ICaseIterator } from "../base/ICaseIterator";
 import { Validator } from "../base/Validator";
 
 import { Vector } from "tstl/container/Vector";
-import { OutOfRange } from "tstl/exception";
-import { prev_permutation, next_permutation } from "tstl/algorithm/mathematics";
+import { OutOfRange } from "tstl/exception/OutOfRange";
+import { prev_permutation, next_permutation } from "tstl/ranges/algorithm/mathematics";
+import { ICaseReverseIterator } from "../base/ICaseReverseIterator";
 
 export class Combination 
-    implements ICaseGenerator<Combination, Combination.Iterator>
+    implements ICaseGenerator.IBidirectional<Combination, Combination.Iterator, Combination.ReverseIterator>
 {
     private n_: number;
     private r_: number;
@@ -91,7 +93,7 @@ export class Combination
 
 export namespace Combination
 {
-    export class Iterator
+    export class Iterator implements ICaseIterator.IResersable<Combination, Iterator, ReverseIterator>
     {
         private source_: Combination;
         private step_: number;
@@ -138,7 +140,7 @@ export namespace Combination
                 let it: Iterator = this.source_.begin();
                 let mask: Vector<boolean> = new Vector(it.bit_mask_!);
 
-                next_permutation(mask.begin(), mask.end());
+                next_permutation(mask);
                 return new Iterator(this.source_, this.source_.size() - 1, mask);
             }
             else
@@ -159,13 +161,13 @@ export namespace Combination
                 return this.source_.end();
             
             let mask: Vector<boolean> = new Vector(this.bit_mask_!);
-            func(mask.begin(), mask.end());
+            func(mask);
 
             return  new Iterator(this.source_, step, mask);
         }
     }
 
-    export class ReverseIterator
+    export class ReverseIterator implements ICaseReverseIterator<Combination, Iterator, ReverseIterator>
     {
         private base_: Iterator;
 
@@ -229,7 +231,7 @@ export namespace Combination
             else
             {
                 let value: Array<number> = _Mask(this.bit_mask_);
-                this.done_ = !prev_permutation(this.bit_mask_.begin(), this.bit_mask_.end());
+                this.done_ = !prev_permutation(this.bit_mask_);
 
                 return {
                     done: false,

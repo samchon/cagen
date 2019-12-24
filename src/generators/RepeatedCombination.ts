@@ -1,7 +1,11 @@
-import { OutOfRange } from "tstl/exception";
+import { ICaseGenerator } from "../base/ICaseGenerator";
+import { ICaseIterator } from "../base/ICaseIterator";
 import { Validator } from "../base/Validator";
 
-export class RepeatedCombination
+import { OutOfRange } from "tstl/exception/OutOfRange";
+
+export class RepeatedCombination 
+    implements ICaseGenerator<RepeatedCombination, RepeatedCombination.Iterator>
 {
     private n_: number;
     private r_: number;
@@ -75,7 +79,8 @@ export namespace RepeatedCombination
         return Math.round(ret);
     }
     
-    export class Iterator
+    export class Iterator 
+        implements ICaseIterator<RepeatedCombination, Iterator>
     {
         private source_: RepeatedCombination;
         private step_: number;

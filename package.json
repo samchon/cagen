@@ -1,6 +1,6 @@
 {
   "name": "number-of-cases",
-  "version": "1.1.0-dev.20191223",
+  "version": "1.1.0-dev.20191224",
   "description": "Number of Cases Generator",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -21,7 +21,7 @@
   },
   "homepage": "https://github.com/samchon/number-of-cases#readme",
   "dependencies": {
-    "tstl": ">=2.3.0"
+    "tstl": "^2.4.0-dev.20191223"
   },
   "devDependencies": {
     "@types/node": "^12.12.17",

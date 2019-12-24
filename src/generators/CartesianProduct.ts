@@ -1,5 +1,5 @@
 import { ArrayGenerator } from "../base/ArrayGenerator";
-import { InvalidArgument } from "tstl/exception";
+import { InvalidArgument } from "tstl/exception/InvalidArgument";
 
 /**
  * A cartesian-product case generator.

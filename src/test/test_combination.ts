@@ -1,6 +1,6 @@
 import { HashSet } from "tstl/container/HashSet";
 import { Vector } from "tstl/container/Vector";
-import { is_sorted } from "tstl/algorithm/sorting";
+import { is_sorted } from "tstl/ranges/algorithm/sorting";
 import { randint } from "tstl/algorithm/random";
 
 import { Combination } from "../generators/Combination";
@@ -20,7 +20,7 @@ export function test_combination(): void
     let n: number = randint(4, 8);
     let r: number = randint(3, n);
     let generator: Combination = new Combination(n, r);
-
+    
     if (generator.size() !== compute_size(n, r))
         throw new Error("Error on Combination: wrong size");
 
@@ -37,7 +37,7 @@ export function test_combination(): void
 
         if (s.size() !== elements.length)
             throw new Error("Error on Combination: generated elements are not unique");
-        else if (is_sorted(v.begin(), v.end()) === false)
+        else if (is_sorted(v) === false)
             throw new Error("Error on Combination: elements are wrong, not sorted");
 
         unique.insert(elements);

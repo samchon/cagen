@@ -1,4 +1,4 @@
-import { InvalidArgument } from "tstl/exception";
+import { InvalidArgument } from "tstl/exception/InvalidArgument";
 
 /**
  * @internal

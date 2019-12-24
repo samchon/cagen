@@ -1,7 +1,12 @@
+import { ICaseGenerator } from "./ICaseGenerator";
+import { ICaseIterator } from "./ICaseIterator";
+import { ICaseReverseIterator } from "./ICaseReverseIterator";
+
 import { OutOfRange } from "tstl/exception";
 import { equal_to } from "tstl/functional/comparators";
 
 export abstract class ArrayGenerator<Source extends ArrayGenerator<Source>>
+    implements ICaseGenerator.IBidirectional<Source, ArrayGenerator.Iterator<Source>, ArrayGenerator.ReverseIterator<Source>>
 {
     /* ---------------------------------------------------------
         COMPUTATIONS
@@ -53,6 +58,7 @@ export abstract class ArrayGenerator<Source extends ArrayGenerator<Source>>
 export namespace ArrayGenerator
 {
     export class Iterator<Source extends ArrayGenerator<Source>>
+        implements ICaseIterator.IResersable<Source, Iterator<Source>, ReverseIterator<Source>>
     {
         private source_: Source;
         private index_: number;
@@ -112,6 +118,7 @@ export namespace ArrayGenerator
     }
 
     export class ReverseIterator<Source extends ArrayGenerator<Source>>
+        implements ICaseReverseIterator<Source, Iterator<Source>, ReverseIterator<Source>>
     {
         private base_: Iterator<Source>;
 
