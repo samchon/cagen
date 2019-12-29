@@ -1,11 +1,11 @@
 import { ICaseGenerator } from "../base/ICaseGenerator";
 import { ICaseIterator } from "../base/ICaseIterator";
+import { ICaseReverseIterator } from "../base/ICaseReverseIterator";
 import { Validator } from "../base/Validator";
 
 import { Vector } from "tstl/container/Vector";
 import { OutOfRange } from "tstl/exception/OutOfRange";
 import { prev_permutation, next_permutation } from "tstl/ranges/algorithm/mathematics";
-import { ICaseReverseIterator } from "../base/ICaseReverseIterator";
 
 export class Combination 
     implements ICaseGenerator.IBidirectional<Combination, Combination.Iterator, Combination.ReverseIterator>
