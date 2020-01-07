@@ -1,15 +1,16 @@
 import { ArrayGenerator } from "../base/ArrayGenerator";
-import { Validator } from "../base/Validator";
+import { INR } from "../base/INR";
 
 /**
- * A repeated-permutation case generator.
+ * Repeated-permutation generator.
  * 
  * <sub>n</sub>��<sub>r</sub>
  * 
- * @author Jeongho Nam <http://samchon.org>
+ * @author Jeongho Nam - https://github.com/samchon
  */
 export class RepeatedPermutation 
     extends ArrayGenerator<RepeatedPermutation>
+    implements INR
 {
     /**
      * @hidden
@@ -43,7 +44,7 @@ export class RepeatedPermutation
     public constructor(n: number, r: number)
     {
         super();
-        Validator.initializer.bind(this)(n, r);
+        INR.validate.bind(this)(n, r);
 
         this.n_ = n;
         this.r_ = r;
@@ -63,7 +64,7 @@ export class RepeatedPermutation
         ACCESSORS
     ----------------------------------------------------------- */
     /**
-     * @inheritdoc
+     * @inheritDoc
      */
     public size(): number
     {
@@ -71,7 +72,7 @@ export class RepeatedPermutation
     }
 
     /**
-     * Get N, number of candidates.
+     * @inheritDoc
      */
     public n(): number
     {
@@ -79,11 +80,19 @@ export class RepeatedPermutation
     }
 
     /**
-     * Get R, number of elements for each case.
+     * @inheritDoc
      */
     public r(): number
     {
         return this.r_;
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public equals(obj: RepeatedPermutation): boolean
+    {
+        return INR.equal_to(this, obj);
     }
 
     /* -----------------------------------------------------------

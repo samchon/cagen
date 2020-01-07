@@ -1,5 +1,5 @@
 import { IForwardIterator } from "tstl/iterator/IForwardIterator";
-import { IReversableIterator } from "tstl/iterator";
+import { IReversableIterator } from "tstl/iterator/IReversableIterator";
 
 import { ICaseGenerator } from "./ICaseGenerator";
 import { ICaseReverseIterator } from "./ICaseReverseIterator";

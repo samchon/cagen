@@ -1,11 +1,19 @@
 import { ICaseGenerator } from "../base/ICaseGenerator";
 import { ICaseIterator } from "../base/ICaseIterator";
-import { Validator } from "../base/Validator";
+import { INR } from "../base/INR";
 
 import { OutOfRange } from "tstl/exception/OutOfRange";
 
+/**
+ * Repeated-combination generator.
+ * 
+ * <sub>n</sub>H<sub>r</sub>
+ * 
+ * @author Jeongho Nam - https://github.com/samchon
+ */
 export class RepeatedCombination 
-    implements ICaseGenerator<RepeatedCombination, RepeatedCombination.Iterator>
+    implements ICaseGenerator<RepeatedCombination, RepeatedCombination.Iterator>,
+        INR
 {
     private n_: number;
     private r_: number;
@@ -14,9 +22,18 @@ export class RepeatedCombination
     private begin_: RepeatedCombination.Iterator;
     private end_: RepeatedCombination.Iterator;
 
+    /* ---------------------------------------------------------------
+        CONSTRUCTORS
+    --------------------------------------------------------------- */
+    /**
+     * Initializer Constructor.
+     * 
+     * @param n Size of candidates.
+     * @param r Size of elements of each case.
+     */
     public constructor(n: number, r: number)
     {
-        Validator.initializer.bind(this)(n, r);
+        INR.validate.bind(this)(n, r);
 
         this.n_ = n;
         this.r_ = r;
@@ -29,39 +46,60 @@ export class RepeatedCombination
     /* ---------------------------------------------------------
         ACCESSORS
     --------------------------------------------------------- */
+    /**
+     * @inheritDoc
+     */
     public size(): number
     {
         return this.size_;
     }
     
+    /**
+     * @inheritDoc
+     */
     public n(): number
     {
         return this.n_;
     }
     
+    /**
+     * @inheritDoc
+     */
     public r(): number
     {
         return this.r_;
     }
 
+    /**
+     * @inheritDoc
+     */
     public equals(obj: RepeatedCombination): boolean
     {
-        return this.n_ === obj.n_ && this.r_ === obj.r_;
+        return INR.equal_to(this, obj);
     }
     
     /* ---------------------------------------------------------
         ITERATORS
     --------------------------------------------------------- */
+    /**
+     * @inheritDoc
+     */
     public begin(): RepeatedCombination.Iterator
     {
         return this.begin_;
     }
 
+    /**
+     * @inheritDoc
+     */
     public end(): RepeatedCombination.Iterator
     {
         return this.end_;
     }
 
+    /**
+     * @inheritDoc
+     */
     public [Symbol.iterator](): IterableIterator<number[]>
     {
         return new RepeatedCombination.ForOfAdaptor(this);

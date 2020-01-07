@@ -1,12 +1,14 @@
 import { ArrayGenerator } from "../base/ArrayGenerator";
+
 import { InvalidArgument } from "tstl/exception/InvalidArgument";
+import { equal } from "tstl/ranges/algorithm/iterations";
 
 /**
  * A cartesian-product case generator.
  * 
  * A<sub>1</sub> X A<sub>2</sub> X ... X A<sub>n</sub>
  * 
- * @author Jeongho Nam <http://samchon.org>
+ * @author Jeongho Nam - https://github.com/samchon
  */
 export class CartesianProduct extends ArrayGenerator<CartesianProduct>
 {
@@ -63,11 +65,19 @@ export class CartesianProduct extends ArrayGenerator<CartesianProduct>
     }
 
     /**
-     * Get digits, Max number (size) of each digit.
+     * Get digits, maximum number (size) of each digit.
      */
     public digits(): Array<number>
     {
         return this.digits_;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public equals(obj: CartesianProduct): boolean
+    {
+        return equal(this.digits_, obj.digits_);
     }
 
     /* -----------------------------------------------------------

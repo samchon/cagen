@@ -5,7 +5,7 @@ import { Permutation } from "./Permutation";
  * 
  * n! = <sub>n</sub>P<sub>n</sub>
  * 
- * @author Jeongho Nam <http://samchon.org>
+ * @author Jeongho Nam - https://github.com/samchon
  */
 export class Factorial extends Permutation
 {

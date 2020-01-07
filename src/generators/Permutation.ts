@@ -1,15 +1,16 @@
 import { ArrayGenerator } from "../base/ArrayGenerator";
-import { Validator } from "../base/Validator";
+import { INR } from "../base/INR";
 
 /**
  * A permutation case generator.
  * 
  * <sub>n</sub>P<sub>r</sub>
  * 
- * @author Jeongho Nam <http://samchon.org>
+ * @author Jeongho Nam - https://github.com/samchon
  */
-export class Permutation 
+export class Permutation
     extends ArrayGenerator<Permutation> 
+    implements INR
 {
     /**
      * @hidden
@@ -38,7 +39,7 @@ export class Permutation
     public constructor(n: number, r: number) 
     {
         super();
-        Validator.initializer.bind(this)(n, r);
+        INR.validate.bind(this)(n, r);
 
         this.n_ = n;
         this.r_ = r;
@@ -57,7 +58,7 @@ export class Permutation
     }
 
     /**
-     * Get N, number of candidates.
+     * @inheritdoc
      */
     public n(): number
     {
@@ -65,11 +66,19 @@ export class Permutation
     }
 
     /**
-     * Get R, number of elements for each case.
+     * @inheritdoc
      */
     public r(): number
     {
         return this.r_;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public equals(obj: Permutation): boolean
+    {
+        return INR.equal_to(this, obj);
     }
 
     /* -----------------------------------------------------------

@@ -6,7 +6,7 @@
  * ```StringUtil.substitute()``` method.
  *
  * @reference http://help.adobe.com/en_US/FlashPlatform/reference/actionscript/3/mx/utils/StringUtil.html
- * @author Jeongho Nam <http://samchon.org>
+ * @author Jeongho Nam - https://github.com/samchon
  */
 export class StringUtil
 {

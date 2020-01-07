@@ -1,14 +1,23 @@
 import { ICaseGenerator } from "../base/ICaseGenerator";
+import { INR } from "../base/INR";
+
 import { ICaseIterator } from "../base/ICaseIterator";
 import { ICaseReverseIterator } from "../base/ICaseReverseIterator";
-import { Validator } from "../base/Validator";
 
 import { Vector } from "tstl/container/Vector";
 import { OutOfRange } from "tstl/exception/OutOfRange";
 import { prev_permutation, next_permutation } from "tstl/ranges/algorithm/mathematics";
 
+/**
+ * Combination generator.
+ * 
+ * <sub>n</sub>C<sub>r</sub>
+ * 
+ * @author Jeongho Nam - https://github.com/samchon
+ */
 export class Combination 
-    implements ICaseGenerator.IBidirectional<Combination, Combination.Iterator, Combination.ReverseIterator>
+    implements ICaseGenerator.IBidirectional<Combination, Combination.Iterator, Combination.ReverseIterator>,
+        INR
 {
     private n_: number;
     private r_: number;
@@ -21,9 +30,15 @@ export class Combination
     /* ---------------------------------------------------------
         CONSTRUCTOR
     --------------------------------------------------------- */
+    /**
+     * Initializer Constructor.
+     * 
+     * @param n Size of candidates.
+     * @param r Size of elements of each case.
+     */
     public constructor(n: number, r: number)
     {
-        Validator.initializer.bind(this)(n, r);
+        INR.validate.bind(this)(n, r);
 
         // BASIC MEMBERS
         this.n_ = n;
@@ -44,47 +59,76 @@ export class Combination
     /* ---------------------------------------------------------
         ACCESSORS
     --------------------------------------------------------- */
+    /**
+     * @inheritDoc
+     */
     public size(): number
     {
         return this.size_;
     }
 
+    /**
+     * @inheritDoc
+     */
     public n(): number
     {
         return this.n_;
     }
 
+    /**
+     * @inheritDoc
+     */
     public r(): number
     {
         return this.r_;
     }
 
+    /**
+     * @inheritDoc
+     */
     public equals(obj: Combination): boolean
     {
-        return this.n_ === obj.n_ && this.r_ === obj.r_;
+        return INR.equal_to(this, obj);
     }
 
     /* ---------------------------------------------------------
         ITERATORS
     --------------------------------------------------------- */
+    /**
+     * @inheritDoc
+     */
     public begin(): Combination.Iterator
     {
         return this.begin_;
     }
+
+    /**
+     * @inheritDoc
+     */
     public end(): Combination.Iterator
     {
         return this.end_;
     }
 
+    /**
+     * @inheritDoc
+     */
     public rbegin(): Combination.ReverseIterator
     {
         return this.end_.reverse();
     }
+
+    /**
+     * @inheritDoc
+     */
     public rend(): Combination.ReverseIterator
     {
         return this.begin_.reverse();
     }
 
+    /**
+     * @inheritDoc
+     */
     public [Symbol.iterator](): IterableIterator<number[]>
     {
         return new Combination.ForOfAdaptor(this.bit_mask_);
