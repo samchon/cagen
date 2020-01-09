@@ -1,10 +1,13 @@
+//================================================================ 
+/** @module cagen */
+//================================================================
 import { ArrayGenerator } from "../base/ArrayGenerator";
 
 import { InvalidArgument } from "tstl/exception/InvalidArgument";
 import { equal } from "tstl/ranges/algorithm/iterations";
 
 /**
- * A cartesian-product case generator.
+ * Cartesian-product generator.
  * 
  * A<sub>1</sub> X A<sub>2</sub> X ... X A<sub>n</sub>
  * 
@@ -12,20 +15,10 @@ import { equal } from "tstl/ranges/algorithm/iterations";
  */
 export class CartesianProduct extends ArrayGenerator<CartesianProduct>
 {
-    /**
-     * @hidden
-     */
     private digits_: Array<number>;
-
-    /**
-     * @hidden
-     */
-    private dividers_: Array<number>;
-
-    /**
-     * @hidden
-     */
     private size_: number;
+    
+    private dividers_: Array<number>;
 
     /* -----------------------------------------------------------
         CONSTRUCTORS
@@ -83,9 +76,6 @@ export class CartesianProduct extends ArrayGenerator<CartesianProduct>
     /* -----------------------------------------------------------
         COMPUTATION
     ----------------------------------------------------------- */
-    /**
-     * @hidden
-     */
     protected _At(index: number): Array<number>
     {
         let row: Array<number> = [];
@@ -103,9 +93,22 @@ export class CartesianProduct extends ArrayGenerator<CartesianProduct>
 
 export namespace CartesianProduct
 {
+    /**
+     * Iterator of {@link CartesianProduct}.
+     */
     export type Iterator = ArrayGenerator.Iterator<CartesianProduct>;
+
+    /**
+     * Reverse iterator of {@link CartesianProduct}.
+     */
     export type ReverseIterator = ArrayGenerator.ReverseIterator<CartesianProduct>;
 
+    /**
+     * Compute number of cases when {@link CartesianProduct}.
+     * 
+     * @param digits Maximum numbers of each digit.
+     * @return Computed number of cases.
+     */
     export function size(...digits: number[]): number
     {
         let ret: number = 1;

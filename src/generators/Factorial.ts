@@ -1,7 +1,10 @@
+//================================================================ 
+/** @module cagen */
+//================================================================
 import { Permutation } from "./Permutation";
 
 /**
- * Factorial case generator.
+ * Factorial generator.
  * 
  * n! = <sub>n</sub>P<sub>n</sub>
  * 
@@ -10,9 +13,9 @@ import { Permutation } from "./Permutation";
 export class Factorial extends Permutation
 {
     /**
-     * Construct from factorial size N. 
+     * Intializer Constructor.
      *
-     * @param n Factoria size N.
+     * @param n Number of candidates.
      */
     public constructor(n: number)
     {
@@ -22,11 +25,14 @@ export class Factorial extends Permutation
 
 export namespace Factorial
 {
+    /**
+     * Compute number of cases when {@link Factorial}.
+     * 
+     * @param n Number of candidates.
+     * @return Computed number of cases.
+     */
     export function size(n: number): number
     {
-        let ret: number = 1;
-        while (n-- > 1)
-            ret *= n;
-        return ret;
+        return Permutation.size(n, n);
     }
 }

@@ -1,6 +1,14 @@
+//================================================================ 
+/** @module cagen.base */
+//================================================================
 import { InvalidArgument } from "tstl/exception/InvalidArgument";
 
-export interface INR
+/**
+ * Common interface for nXr.
+ * 
+ * @author Jeongho Nam - https://github.com/samchon
+ */
+export interface ICandidate
 {
     /**
      * Get N, number of candidates.
@@ -8,12 +16,12 @@ export interface INR
     n(): number;
     
     /**
-     * Get R, number of elements for each case.
+     * Get R, number of elements in each case.
      */
     r(): number;
 }
 
-export namespace INR
+export namespace ICandidate
 {
     /**
      * @internal
@@ -27,7 +35,7 @@ export namespace INR
     /**
      * @internal
      */
-    export function equal_to(x: INR, y: INR): boolean
+    export function equal_to(x: ICandidate, y: ICandidate): boolean
     {
         return x.n() === y.n() && x.r() === y.r();
     }

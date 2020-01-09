@@ -1,33 +1,37 @@
 {
-  "name": "number-of-cases",
-  "version": "1.1.0-dev.20200107",
+  "name": "cagen",
+  "version": "1.0.0",
   "description": "Number of Cases Generator",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
   "scripts": {
-    "dev": "tsc --watch",
+    "api": "typedoc src --ignoreCompilerErrors --plugin typedoc-plugin-external-module-name --exclude \"**/+(test|benchmark)/**\" --excludePrivate --excludeProtected --excludeNotExported --out ",
     "build": "npm run compile && npm run test",
     "compile": "tsc",
+    "dev": "tsc --watch",
     "test": "node lib/test"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/samchon/number-of-cases"
+    "url": "https://github.com/samchon/cagen"
   },
   "author": "Jeongho Nam",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/samchon/number-of-cases/issues"
+    "url": "https://github.com/samchon/cagen/issues"
   },
-  "homepage": "https://github.com/samchon/number-of-cases#readme",
+  "homepage": "https://github.com/samchon/cagen#readme",
   "dependencies": {
-    "tstl": "^2.4.0-dev.20200104"
+    "tstl": "^2.4.0"
   },
   "devDependencies": {
     "@types/node": "^12.12.17",
-    "typescript": "^3.7.2"
+    "typedoc": "0.14.2",
+    "typedoc-plugin-external-module-name": "2.0.0",
+    "typescript": "^3.7.4"
   },
   "keywords": [
+    "number of cases",
     "case generator",
     "cartesian product",
     "combination",

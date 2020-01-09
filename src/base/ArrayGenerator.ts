@@ -1,18 +1,34 @@
-import { ICaseGenerator } from "./ICaseGenerator";
-import { ICaseIterator } from "./ICaseIterator";
-import { ICaseReverseIterator } from "./ICaseReverseIterator";
+//================================================================ 
+/** @module cagen.base */
+//================================================================
+import { IBidirectionalGenerator } from "./IBidirectionalGenerator";
 
-import { OutOfRange } from "tstl/exception";
-import { equal_to } from "tstl/functional/comparators";
+import { IRandomAccessIterator } from "tstl/iterator/IRandomAccessIterator";
+import { OutOfRange } from "tstl/exception/OutOfRange";
 
-export abstract class ArrayGenerator<Source extends ArrayGenerator<Source>>
-    implements ICaseGenerator.IBidirectional<Source, ArrayGenerator.Iterator<Source>, ArrayGenerator.ReverseIterator<Source>>
+/**
+ * Basic array generator.
+ * 
+ * @typeParam SourceT Derived type extending this {@link ArrayGenerator}
+ * @author Jeongho Nam - https://github.com/samchon
+ */
+export abstract class ArrayGenerator<SourceT extends ArrayGenerator<SourceT>>
+    implements IBidirectionalGenerator<SourceT, ArrayGenerator.Iterator<SourceT>, ArrayGenerator.ReverseIterator<SourceT>>
 {
     /* ---------------------------------------------------------
-        COMPUTATIONS
+        ACCESSORS
     --------------------------------------------------------- */
+    /**
+     * @inheritDoc
+     */
     public abstract size(): number;
     
+    /**
+     * Get a case at specific position.
+     * 
+     * @param index Specific position.
+     * @return The case at the *index*.
+     */
     public at(index: number): Array<number>
     {
         if (index < 0)
@@ -24,6 +40,22 @@ export abstract class ArrayGenerator<Source extends ArrayGenerator<Source>>
     }
 
     /**
+     * Get iterator at specific position.
+     * 
+     * @param index Specific position.
+     * @return The iterator at the *index*.
+     */
+    public nth(index: number): ArrayGenerator.Iterator<SourceT>
+    {
+        return new ArrayGenerator.Iterator(this as any, index);
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public abstract equals(obj: SourceT): boolean;
+
+    /**
      * @hidden
      */
     protected abstract _At(index: number): Array<number>;
@@ -31,24 +63,41 @@ export abstract class ArrayGenerator<Source extends ArrayGenerator<Source>>
     /* ---------------------------------------------------------
         ITERATORS
     --------------------------------------------------------- */
-    public begin(): ArrayGenerator.Iterator<Source>
+    /**
+     * @inheritDoc
+     */
+    public begin(): ArrayGenerator.Iterator<SourceT>
     {
-        return new ArrayGenerator.Iterator(<any>this, 0);
-    }
-    public end(): ArrayGenerator.Iterator<Source>
-    {
-        return new ArrayGenerator.Iterator(<any>this, this.size());
+        return this.nth(0);
     }
 
-    public rbegin(): ArrayGenerator.ReverseIterator<Source>
+    /**
+     * @inheritDoc
+     */
+    public end(): ArrayGenerator.Iterator<SourceT>
+    {
+        return this.nth(this.size());
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public rbegin(): ArrayGenerator.ReverseIterator<SourceT>
     {
         return this.end().reverse();
     }
-    public rend(): ArrayGenerator.ReverseIterator<Source>
+
+    /**
+     * @inheritDoc
+     */
+    public rend(): ArrayGenerator.ReverseIterator<SourceT>
     {
         return this.begin().reverse();
     }
 
+    /**
+     * @inheritDoc
+     */
     public [Symbol.iterator](): IterableIterator<number[]>
     {
         return new ArrayGenerator.ForOfAdaptor(<any>this);
@@ -57,123 +106,191 @@ export abstract class ArrayGenerator<Source extends ArrayGenerator<Source>>
 
 export namespace ArrayGenerator
 {
-    export class Iterator<Source extends ArrayGenerator<Source>>
-        implements ICaseIterator.IResersable<Source, Iterator<Source>, ReverseIterator<Source>>
+    /**
+     * Iterator of {@link ArrayGenerator}.
+     * 
+     * @author Jeongho Nam - https://github.com/samchon
+     */
+    export class Iterator<SourceT extends ArrayGenerator<SourceT>>
+        implements IBidirectionalGenerator.Iterator<SourceT, Iterator<SourceT>, ReverseIterator<SourceT>>,
+            IRandomAccessIterator<number[], Iterator<SourceT>>
     {
-        private source_: Source;
+        private source_: SourceT;
         private index_: number;
 
-        public constructor(source: Source, index: number)
+        /* ---------------------------------------------------------
+            CONSTRUCTORS
+        --------------------------------------------------------- */
+        /**
+         * Initializer Constructor.
+         * 
+         * @param source Source generator.
+         * @param index Index number.
+         */
+        public constructor(source: SourceT, index: number)
         {
             this.source_ = source;
             this.index_ = index;
         }
 
-        public reverse(): ReverseIterator<Source>
+        /**
+         * @inheritDoc
+         */
+        public reverse(): ReverseIterator<SourceT>
         {
             return new ReverseIterator(this);
+        }
+
+        /**
+         * @inheritDoc
+         */
+        public prev(): Iterator<SourceT>
+        {
+            return new Iterator(this.source_, this.index_ - 1);
+        }
+
+        /**
+         * @inheritDoc
+         */
+        public next(): Iterator<SourceT>
+        {
+            return new Iterator(this.source_, this.index_ + 1);
+        }
+
+        /**
+         * @inheritDoc
+         */
+        public advance(n: number): Iterator<SourceT>
+        {
+            return new Iterator(this.source_, this.index_ + n);
         }
 
         /* ---------------------------------------------------------
             ACCESSORS
         --------------------------------------------------------- */
-        public source(): Source
+        /**
+         * @inheritDoc
+         */
+        public source(): SourceT
         {
             return this.source_;
         }
 
+        /**
+         * @inheritDoc
+         */
         public index(): number
         {
             return this.index_;
         }
 
+        /**
+         * @inheritDoc
+         */
         public get value(): Array<number>
         {
             return this.source_.at(this.index_);
         }
 
-        public equals(obj: Iterator<Source>): boolean
+        /**
+         * @inheritDoc
+         */
+        public equals(obj: Iterator<SourceT>): boolean
         {
             return this.index_ === obj.index_ 
-                && equal_to(this.source_, obj.source_);
-        }
-
-        /* ---------------------------------------------------------
-            MOVERS
-        --------------------------------------------------------- */
-        public prev(): Iterator<Source>
-        {
-            return new Iterator(this.source_, this.index_ - 1);
-        }
-
-        public next(): Iterator<Source>
-        {
-            return new Iterator(this.source_, this.index_ + 1);
-        }
-
-        public advance(n: number): Iterator<Source>
-        {
-            return new Iterator(this.source_, this.index_ + n);
+                && this.source_.equals(obj.source_);
         }
     }
 
-    export class ReverseIterator<Source extends ArrayGenerator<Source>>
-        implements ICaseReverseIterator<Source, Iterator<Source>, ReverseIterator<Source>>
+    /**
+     * Reverse iterator of {@link ArrayGenerator}.
+     * 
+     * @author Jeongho Nam - https://github.com/samchon
+     */
+    export class ReverseIterator<SourceT extends ArrayGenerator<SourceT>>
+        implements IBidirectionalGenerator.ReverseIterator<SourceT, Iterator<SourceT>, ReverseIterator<SourceT>>,
+            IRandomAccessIterator<number[], ReverseIterator<SourceT>>
     {
-        private base_: Iterator<Source>;
+        private base_: Iterator<SourceT>;
 
         /* ---------------------------------------------------------
             CONSTRUCTORS
         --------------------------------------------------------- */
-        public constructor(base: Iterator<Source>)
+        /**
+         * Initializer Constructor.
+         * 
+         * @param base The base iterator.
+         */
+        public constructor(base: Iterator<SourceT>)
         {
             this.base_ = base.prev();
         }
 
-        public base(): Iterator<Source>
+        /**
+         * @inheritDoc
+         */
+        public prev(): ReverseIterator<SourceT>
         {
-            return this.base_.next();
+            return this.base().next().reverse();
+        }
+
+        /**
+         * @inheritDoc
+         */
+        public next(): ReverseIterator<SourceT>
+        {
+            return this.base().prev().reverse();
+        }
+
+        /**
+         * @inheritDoc
+         */
+        public advance(n: number): ReverseIterator<SourceT>
+        {
+            return new ReverseIterator(this.base().advance(-n));
         }
 
         /* ---------------------------------------------------------
             ACCESSORS
         --------------------------------------------------------- */
-        public source(): Source
+        /**
+         * @inheritDoc
+         */
+        public base(): Iterator<SourceT>
+        {
+            return this.base_.next();
+        }
+
+        /**
+         * @inheritDoc
+         */
+        public source(): SourceT
         {
             return this.base_.source();
         }
 
+        /**
+         * @inheritDoc
+         */
         public index(): number
         {
             return this.base_.index();
         }
 
+        /**
+         * @inheritDoc
+         */
         public get value(): Array<number>
         {
             return this.base_.value;
         }
 
-        public equals(obj: ReverseIterator<Source>): boolean
+        /**
+         * @inheritDoc
+         */
+        public equals(obj: ReverseIterator<SourceT>): boolean
         {
             return this.base_.equals(obj.base_);
-        }
-
-        /* ---------------------------------------------------------
-            MOVERS
-        --------------------------------------------------------- */
-        public prev(): ReverseIterator<Source>
-        {
-            return this.base().next().reverse();
-        }
-
-        public next(): ReverseIterator<Source>
-        {
-            return this.base().prev().reverse();
-        }
-
-        public advance(n: number): ReverseIterator<Source>
-        {
-            return new ReverseIterator(this.base().advance(-n));
         }
     }
 

@@ -1,8 +1,11 @@
+//================================================================ 
+/** @module cagen */
+//================================================================
 import { ArrayGenerator } from "../base/ArrayGenerator";
-import { INR } from "../base/INR";
+import { ICandidate } from "../base/ICandidate";
 
 /**
- * A permutation case generator.
+ * Permutation generator.
  * 
  * <sub>n</sub>P<sub>r</sub>
  * 
@@ -10,36 +13,25 @@ import { INR } from "../base/INR";
  */
 export class Permutation
     extends ArrayGenerator<Permutation> 
-    implements INR
+    implements ICandidate
 {
-    /**
-     * @hidden
-     */
-    private size_: number;
-
-    /**
-     * @hidden
-     */
     private n_: number;
-
-    /**
-     * @hidden
-     */
     private r_: number;
+    private size_: number;
 
     /* ---------------------------------------------------------------
         CONSTRUCTORS
     --------------------------------------------------------------- */
     /**
-     * Construct from size of N and R.
+     * Initializer Constructor.
      * 
-     * @param n Size of candidates.
-     * @param r Size of elements of each case.
+     * @param n Number of candidates.
+     * @param r Number of elements in each case.
      */
     public constructor(n: number, r: number) 
     {
         super();
-        INR.validate.bind(this)(n, r);
+        ICandidate.validate.bind(this)(n, r);
 
         this.n_ = n;
         this.r_ = r;
@@ -78,7 +70,7 @@ export class Permutation
      */
     public equals(obj: Permutation): boolean
     {
-        return INR.equal_to(this, obj);
+        return ICandidate.equal_to(this, obj);
     }
 
     /* -----------------------------------------------------------
@@ -109,9 +101,23 @@ export class Permutation
 
 export namespace Permutation
 {
+    /**
+     * Iterator of {@link Permutation}.
+     */
     export type Iterator = ArrayGenerator.Iterator<Permutation>;
+
+    /**
+     * Reverse iterator of {@link Permutation}.
+     */
 	export type ReverseIterator = ArrayGenerator.ReverseIterator<Permutation>;
-	
+    
+    /**
+     * Compute number of cases when {@link Permutation}.
+     * 
+     * @param n Number of candidates.
+     * @param r Number of elements in each case.
+     * @return Computed number of cases.
+     */
 	export function size(n: number, r: number): number
 	{
 		let ret: number = n;

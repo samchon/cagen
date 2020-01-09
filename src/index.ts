@@ -1,7 +1,9 @@
-export * from "./generators/Combination";
-export * from "./generators/RepeatedCombination";
+//================================================================ 
+/** @module cagen */
+//================================================================
+/**
+ * Basic features.
+ */
+export import base = require("./base");
 
-export * from "./generators/CartesianProduct";
-export * from "./generators/Permutation";
-export * from "./generators/Factorial";
-export * from "./generators/RepeatedPermutation";
+export * from "./generators";

@@ -1,50 +1,39 @@
+//================================================================ 
+/** @module cagen */
+//================================================================
 import { ArrayGenerator } from "../base/ArrayGenerator";
-import { INR } from "../base/INR";
+import { ICandidate } from "../base/ICandidate";
 
 /**
  * Repeated-permutation generator.
  * 
- * <sub>n</sub>��<sub>r</sub>
+ * <sub>n</sub>∏<sub>r</sub>
  * 
  * @author Jeongho Nam - https://github.com/samchon
  */
 export class RepeatedPermutation 
     extends ArrayGenerator<RepeatedPermutation>
-    implements INR
+    implements ICandidate
 {
-    /**
-     * @hidden
-     */
     private size_: number;
-
-    /**
-     * @hidden
-     */
     private n_: number;
-
-    /**
-     * @hidden
-     */
     private r_: number;
-
-    /**
-     * @hidden
-     */
+    
     private dividers_: Array<number>;
 
     /* ---------------------------------------------------------------
         CONSTRUCTORS
     --------------------------------------------------------------- */
     /**
-     * Construct from size of N and R.
+     * Initializer Constructor.
      * 
-     * @param n Size of candidates.
-     * @param r Size of elements of each case.
+     * @param n Number of candidates.
+     * @param r Number of elements in each case.
      */
     public constructor(n: number, r: number)
     {
         super();
-        INR.validate.bind(this)(n, r);
+        ICandidate.validate.bind(this)(n, r);
 
         this.n_ = n;
         this.r_ = r;
@@ -92,7 +81,7 @@ export class RepeatedPermutation
      */
     public equals(obj: RepeatedPermutation): boolean
     {
-        return INR.equal_to(this, obj);
+        return ICandidate.equal_to(this, obj);
     }
 
     /* -----------------------------------------------------------
@@ -115,9 +104,23 @@ export class RepeatedPermutation
 
 export namespace RepeatedPermutation
 {
+    /**
+     * Iterator of {@link RepeatedPermutation}.
+     */
     export type Iterator = ArrayGenerator.Iterator<RepeatedPermutation>;
+
+    /**
+     * Reverse iterator of {@link RepeatedPermutation}.
+     */
     export type ReverseIterator = ArrayGenerator.ReverseIterator<RepeatedPermutation>;
 
+    /**
+     * Compute number of cases when {@link RepeatedPermutation}.
+     * 
+     * @param n Number of candidates.
+     * @param r Number of elements in each case.
+     * @return Computed number of cases.
+     */
     export function size(n: number, r: number): number
     {
         return Math.pow(n, r);

@@ -1,6 +1,8 @@
-import { ICaseGenerator } from "../base/ICaseGenerator";
-import { ICaseIterator } from "../base/ICaseIterator";
-import { INR } from "../base/INR";
+//================================================================ 
+/** @module cagen */
+//================================================================
+import { IForwardGenerator } from "../base/IForwardGenerator";
+import { ICandidate } from "../base/ICandidate";
 
 import { OutOfRange } from "tstl/exception/OutOfRange";
 
@@ -12,8 +14,8 @@ import { OutOfRange } from "tstl/exception/OutOfRange";
  * @author Jeongho Nam - https://github.com/samchon
  */
 export class RepeatedCombination 
-    implements ICaseGenerator<RepeatedCombination, RepeatedCombination.Iterator>,
-        INR
+    implements IForwardGenerator<RepeatedCombination, RepeatedCombination.Iterator>,
+        ICandidate
 {
     private n_: number;
     private r_: number;
@@ -28,19 +30,19 @@ export class RepeatedCombination
     /**
      * Initializer Constructor.
      * 
-     * @param n Size of candidates.
-     * @param r Size of elements of each case.
+     * @param n Number of candidates.
+     * @param r Number of elements in each case.
      */
     public constructor(n: number, r: number)
     {
-        INR.validate.bind(this)(n, r);
+        ICandidate.validate.bind(this)(n, r);
 
         this.n_ = n;
         this.r_ = r;
         this.size_ = RepeatedCombination.size(n, r);
         
-        this.begin_ = new RepeatedCombination.Iterator(this, 0);
-        this.end_ = new RepeatedCombination.Iterator(this, this.size_);
+        this.begin_ = RepeatedCombination.Iterator.create(this, 0);
+        this.end_ = RepeatedCombination.Iterator.create(this, this.size_);
     }
 
     /* ---------------------------------------------------------
@@ -75,7 +77,7 @@ export class RepeatedCombination
      */
     public equals(obj: RepeatedCombination): boolean
     {
-        return INR.equal_to(this, obj);
+        return ICandidate.equal_to(this, obj);
     }
     
     /* ---------------------------------------------------------
@@ -108,6 +110,13 @@ export class RepeatedCombination
 
 export namespace RepeatedCombination
 {
+    /**
+     * Compute number of cases when {@link RepeatedCombination}.
+     * 
+     * @param n Number of candidates.
+     * @param r Number of elements in each case.
+     * @return Computed number of cases.
+     */
     export function size(n: number, r: number): number
     {
         let ret: number = 1;
@@ -117,15 +126,23 @@ export namespace RepeatedCombination
         return Math.round(ret);
     }
     
+    /**
+     * Iterator of {@link RepeatedCombination}.
+     * 
+     * @author Jeongho Nam - https://github.com/samchon
+     */
     export class Iterator 
-        implements ICaseIterator<RepeatedCombination, Iterator>
+        implements IForwardGenerator.Iterator<RepeatedCombination, Iterator>
     {
         private source_: RepeatedCombination;
         private step_: number;
         private indexes_?: number[];
         private value_?: number[];
 
-        public constructor(source: RepeatedCombination, step: number, indexes?: number[])
+        /* -----------------------------------------------------------
+            CONSTRUCTORS
+        ----------------------------------------------------------- */
+        private constructor(source: RepeatedCombination, step: number, indexes?: number[])
         {
             this.source_ = source;
             this.step_ = step;
@@ -137,19 +154,17 @@ export namespace RepeatedCombination
                 this.value_ = _Get_value(this.indexes_);
         }
 
-        public get value(): number[]
+        /**
+         * @internal
+         */
+        public static create(source: RepeatedCombination, step: number, indexes?: number[]): Iterator
         {
-            if (this.value_ === undefined)
-                throw new OutOfRange("Error on RepeatedCombination.Iterator.value: cannot access to RepeatedCombination.end().value");
-            
-            return this.value_!;
+            return new Iterator(source, step, indexes);
         }
 
-        public source(): RepeatedCombination
-        {
-            return this.source_;
-        }
-
+        /**
+         * @inheritDoc
+         */
         public next(): Iterator
         {
             if (this.indexes_ === undefined) // end
@@ -165,10 +180,35 @@ export namespace RepeatedCombination
             return new Iterator(this.source_, this.step_ + 1, indexes);
         }
 
+        /* -----------------------------------------------------------
+            ACCESSORS
+        ----------------------------------------------------------- */
+        /**
+         * @inheritDoc
+         */
+        public source(): RepeatedCombination
+        {
+            return this.source_;
+        }
+
+        /**
+         * @inheritDoc
+         */
+        public get value(): number[]
+        {
+            if (this.value_ === undefined)
+                throw new OutOfRange("Error on RepeatedCombination.Iterator.value: cannot access to RepeatedCombination.end().value");
+            
+            return this.value_!;
+        }
+
+        /**
+         * @inheritDoc
+         */
         public equals(obj: Iterator): boolean
         {
-            return this.source_.equals(obj.source_) 
-                && this.step_ === obj.step_;
+            return this.step_ === obj.step_
+                && this.source_.equals(obj.source_);
         }
     }
 
