@@ -9,7 +9,7 @@
     "build": "npm run compile && npm run test",
     "compile": "tsc",
     "dev": "tsc --watch",
-    "test": "node lib/test"
+    "test": "ts-node src/test"
   },
   "repository": {
     "type": "git",
@@ -26,9 +26,10 @@
   },
   "devDependencies": {
     "@types/node": "^12.12.17",
+    "ts-node": "^8.6.2",
     "typedoc": "0.14.2",
     "typedoc-plugin-external-module-name": "2.0.0",
-    "typescript": "^3.7.4"
+    "typescript": "^3.7.5"
   },
   "keywords": [
     "number of cases",
