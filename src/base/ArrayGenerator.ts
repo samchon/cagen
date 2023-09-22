@@ -98,6 +98,20 @@ export abstract class ArrayGenerator<SourceT extends ArrayGenerator<SourceT>>
     /**
      * @inheritDoc
      */
+    public map<T>
+        (
+            callbackfn: (row: number[], index: number, source: SourceT) => T
+        ): T[] 
+    {
+        const output: T[] = [];
+        for (let i: number = 0; i < this.size(); ++i)
+            output.push(callbackfn(this.at(i), i, <any>this as SourceT));
+        return output;
+    }
+
+    /**
+     * @inheritDoc
+     */
     public [Symbol.iterator](): IterableIterator<number[]>
     {
         return new ArrayGenerator.ForOfAdaptor(<any>this);

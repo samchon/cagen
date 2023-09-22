@@ -32,6 +32,16 @@ export interface IForwardGenerator<
      * Iterator to the end.
      */
     end(): IteratorT;
+
+    /**
+     * Calls a defined callback function on each element of cases, 
+     * and returns an array that contains the results.
+     * 
+     * @param callbackfn A function that accepts up to three arguments. 
+     *                   The map method calls the callbackfn function one time 
+     *                   for each element in the cases.
+     */
+    map<T>(callbackfn: (row: number[], index: number, source: SourceT) => T): T[];
 }
 
 export namespace IForwardGenerator

@@ -102,6 +102,21 @@ export class RepeatedCombination
     /**
      * @inheritDoc
      */
+    public map<T>
+        (
+            callbackfn: (row: number[], index: number, source: this) => T
+        ): T[] 
+    {
+        const output: T[] = [];
+        let i: number = 0;
+        for (const it of this)
+            output.push(callbackfn(it, i++, this));
+        return output;
+    }
+
+    /**
+     * @inheritDoc
+     */
     public [Symbol.iterator](): IterableIterator<number[]>
     {
         return new RepeatedCombination.ForOfAdaptor(this);

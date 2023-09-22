@@ -1,6 +1,6 @@
 {
   "name": "cagen",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Number of Cases Generator",
   "main": "lib/index.js",
   "typings": "lib/index.d.ts",
@@ -22,14 +22,14 @@
   },
   "homepage": "https://github.com/samchon/cagen#readme",
   "dependencies": {
-    "tstl": "^2.4.0"
+    "tstl": "^2.5.13"
   },
   "devDependencies": {
     "@types/node": "^12.12.17",
     "ts-node": "^8.6.2",
-    "typedoc": "0.14.2",
+    "typedoc": "^0.25.1",
     "typedoc-plugin-external-module-name": "2.0.0",
-    "typescript": "^3.7.5"
+    "typescript": "^5.2.2"
   },
   "keywords": [
     "number of cases",
